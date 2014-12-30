@@ -6,6 +6,11 @@ class TagTopic < ActiveRecord::Base
             primary_key: :id)
   has_many(:urls, through: :taggings, source: :url)
 
-  
+  def self.display_topics
+    TagTopic.all.each do |tag_topic|
+      puts "#{tag_topic.id} - #{tag_topic.tag}"
+    end
+    nil
+  end
 
 end

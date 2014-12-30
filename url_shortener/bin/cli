@@ -1,29 +1,18 @@
-
-
 def get_input(msg)
   puts msg
   gets.chomp
 end
 
-def user
-
-end
-
-def execute(option)
-
-
-end
-
-
-
 
 if __FILE__ == $PROGRAM_NAME
   user_email = get_input("what is your email")
   user = User.find_by_email(user_email)
-  option = get_input(
-    "What do you want to do? \n0. Create shortened URL \n1. Visit shortened URL"
-    ).to_i
+  prompt = " What do you want to do?
+    0. Create shortened URL
+    1. Visit shortened URL
+    2. Choose a topic."
 
+  option = get_input(prompt).to_i
   if option == 0
     long_url = get_input("Type in your long URL")
     generated_url = ShortenedUrl.create_for_user_and_long_url!(user, long_url)
@@ -36,6 +25,13 @@ if __FILE__ == $PROGRAM_NAME
     #ShortenedUrl.select(:long_url).where('short_url = ?', shortened_url.short_url)
     #byebug
     Launchy.open(shortened_url.long_url)
+  elsif option == 2
+    TagTopic.display_topics
+    tag_num = get_input("Choose a tag number").to_i
+    tag_topic = TagTopic.find_by_id(tag_num)
+    tag_topic.urls.each do |url|
+      puts url.long_url
+    end
   end
 
 end
