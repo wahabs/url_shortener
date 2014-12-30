@@ -2,6 +2,7 @@ class ShortenedUrl < ActiveRecord::Base
   extend SecureRandom
   validates :submitter_id, presence: true
   validates :short_url, presence: true, uniqueness: true
+  validates :long_url, length: { maximum: 1024 }
   belongs_to(:submitter,
              class_name: 'User',
              foreign_key: :submitter_id,
